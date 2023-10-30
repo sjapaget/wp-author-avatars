@@ -57,7 +57,7 @@ function AA_add_action_links( $links ) {
 /**
  * Block Initializer.
  */
-require_once plugin_dir_path( __FILE__ ) . 'blocks/src/init.php';
+require_once plugin_dir_path( __FILE__ ) . 'blocks/author_avatars_blocks.php';
 
 //function edit_contactmethods( $contactmethods ) {
 //	$contactmethods['facebook'] = 'Facebook';
