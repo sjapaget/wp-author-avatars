@@ -2,6 +2,52 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/show-avatar/components/DisplayCheckBoxes.js":
+/*!*********************************************************!*\
+  !*** ./src/show-avatar/components/DisplayCheckBoxes.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ DisplayCheckBoxes; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function DisplayCheckBoxes({
+  attributes
+}) {
+  // const display = ('display' in attributes) ? attributes.display : new Object
+
+  const {
+    display
+  } = attributes;
+  return wp.compose.withState({
+    checked_obj: Object.assign(new Object(), display)
+  })(({
+    checked_obj,
+    setState
+  }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, display_options?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+    key: v.value
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
+    className: "check_items",
+    label: v.label,
+    checked: checked_obj[v.value],
+    onChange: check => {
+      check ? checked_obj[v.value] = true : delete checked_obj[v.value];
+      setAttributes({
+        display: checked_obj
+      });
+      setState({
+        checked_obj
+      });
+    }
+  })))));
+}
+
+/***/ }),
+
 /***/ "./src/show-avatar/components/RolesCheckBoxes.js":
 /*!*******************************************************!*\
   !*** ./src/show-avatar/components/RolesCheckBoxes.js ***!
@@ -66,7 +112,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/show-avatar/block.json");
 /* harmony import */ var _components_RolesCheckBoxes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/RolesCheckBoxes */ "./src/show-avatar/components/RolesCheckBoxes.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./src/show-avatar/editor.scss");
+/* harmony import */ var _components_DisplayCheckBoxes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/DisplayCheckBoxes */ "./src/show-avatar/components/DisplayCheckBoxes.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor.scss */ "./src/show-avatar/editor.scss");
 
 /**
  * Retrieves the translation of text.
@@ -81,6 +128,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
+
 
 
 
@@ -109,14 +157,73 @@ function Edit({
 }) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
   const {
+    user_links,
+    // not in block.json - (set w/ data from REST API)
+    user_options,
+    // not in block.json - (set w/ data from REST API)
+    sort_list,
+    // not in block.json - (set w/ data from REST API)
     user_id,
-    user_options
+    link,
+    sort_avatars_by,
+    sort_order,
+    size,
+    display = new Object(),
+    limit,
+    page_size,
+    min_post_count
+    // border_radius,
+    // background_color
   } = attributes;
   function onChangeUser(content) {
     setAttributes({
       user_id: content
     });
   }
+  function onChangelink(content) {
+    setAttributes({
+      link: content
+    });
+  }
+  function onChangeSortBy(content) {
+    setAttributes({
+      sort_avatars_by: content
+    });
+  }
+  function onChangeSortOrder(content) {
+    setAttributes({
+      sort_order: content
+    });
+  }
+  function onChangeSize(content) {
+    setAttributes({
+      size: content
+    });
+  }
+  function onChangeLimit(content) {
+    setAttributes({
+      limit: content
+    });
+  }
+  function onChangePageSize(content) {
+    setAttributes({
+      page_size: content
+    });
+  }
+  function onChangeMinPosts(content) {
+    setAttributes({
+      min_post_count: content
+    });
+  }
+
+  // function onChangeBorderRadius(content) {
+  // 	setAttributes({border_radius: content});
+  // }
+
+  // function onChangeBgColor(content) {
+  // 	setAttributes({background_color: content})
+  // }
+
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     key: '000'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -138,7 +245,9 @@ function Edit({
     attributes: attributes
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Info to show with avatar:', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(DisplayCheckBoxes, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Info to show with avatar:', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_DisplayCheckBoxes__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    display: display
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Link avatars to', 'author-avatar'),
     value: link,
     options: user_links,
@@ -167,49 +276,6 @@ function Edit({
     max: 500,
     initialPosition: 50,
     beforeIcon: 'businessman'
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
-    label: "Avatar Corner size",
-    value: border_radius,
-    onChange: onChangeBorderRadius,
-    min: 0,
-    max: 50,
-    initialPosition: 0,
-    beforeIcon: 'buddicons-buddypress-logo'
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Background color', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ColorPicker // Element Tag for Gutenberg standard colour selector
-  , {
-    color: background_color,
-    enableAlpha: true,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Background color', 'author-avatar'),
-    defaultValue: "#000",
-    onChange: onChangeBgColor // onChange event callback
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font color', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ColorPicker // Element Tag for Gutenberg standard colour selector
-  , {
-    color: font_color,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font color', 'author-avatar'),
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font color', 'author-avatar'),
-    defaultValue: "#fff",
-    onChange: onChangeFontColor // onChange event callback
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
-    label: "Border size",
-    value: border_size,
-    onChange: onChangeBorderSize,
-    min: 0,
-    max: 50,
-    initialPosition: 0,
-    beforeIcon: 'buddicons-buddypress-logo'
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border color', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ColorPicker // Element Tag for Gutenberg standard colour selector
-  , {
-    color: border_color,
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font color', 'author-avatar'),
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font color', 'author-avatar'),
-    defaultValue: "#fff",
-    onChange: onChangeBorderColor // onChange event callback
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     className: 'donate',
     href: 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MZTZ5S8MGF75C&lc=CA&item_name=Author%20Avatars%20Plugin%20Support&item_number=authoravatars&currency_code=CAD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted',
@@ -219,7 +285,7 @@ function Edit({
     src: "https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('More options in Adavanced:', 'author-avatar'))))), ",", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(InspectorAdvancedControls, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('More options in Adavanced:', 'author-avatar'))))), ",", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorAdvancedControls, {
     key: '111'
   }, true === display.show_biography && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
     label: "bio_length",
@@ -263,7 +329,7 @@ function Edit({
     value: alignment,
     onChange: onChangeAlignment
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
-    block: "author-avatars/show-avatar",
+    block: _block_json__WEBPACK_IMPORTED_MODULE_5__.name,
     attributes: attributes
   })));
 }

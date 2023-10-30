@@ -13,7 +13,8 @@ import { __ } from '@wordpress/i18n';
  */
 import { 
 	useBlockProps, 
-	InspectorControls 
+	InspectorControls,
+	InspectorAdvancedControls
 } from '@wordpress/block-editor';
 
 import ServerSideRender from '@wordpress/server-side-render';
@@ -36,6 +37,7 @@ import {
 import metadata from './block.json';
 
 import RolesCheckBoxes from './components/RolesCheckBoxes';
+import DisplayCheckBoxes from './components/DisplayCheckBoxes';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -58,14 +60,61 @@ export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 
 	const { 
+		user_links, // not in block.json - (set w/ data from REST API)
+		user_options, // not in block.json - (set w/ data from REST API)
+		sort_list, // not in block.json - (set w/ data from REST API)
 		user_id,
-		user_options,
-
+		link,
+		sort_avatars_by,
+		sort_order,
+		size,
+		display = new Object,
+		limit,
+		page_size,
+		min_post_count
+		// border_radius,
+		// background_color
 	 } = attributes;
 
 	 function onChangeUser(content) {
 		setAttributes({user_id: content})
 	}
+
+	function onChangelink(content) {
+		setAttributes({link: content})
+	}
+
+	function onChangeSortBy(content) {
+		setAttributes({sort_avatars_by: content})
+	}
+
+	function onChangeSortOrder(content) {
+		setAttributes({sort_order: content})
+	}
+
+	function onChangeSize(content) {
+		setAttributes({size: content})
+	}
+
+	function onChangeLimit(content) {
+		setAttributes({limit: content})
+	}
+
+	function onChangePageSize(content) {
+		setAttributes({page_size: content})
+	}
+
+	function onChangeMinPosts(content) {
+		setAttributes({min_post_count: content})
+	}
+
+	// function onChangeBorderRadius(content) {
+	// 	setAttributes({border_radius: content});
+	// }
+
+	// function onChangeBgColor(content) {
+	// 	setAttributes({background_color: content})
+	// }
 
 	return (
 		<>
@@ -99,7 +148,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						)}
 						<label
 							className="blocks-base-control__label">{__('Info to show with avatar:', 'author-avatar')}</label>
-						<DisplayCheckBoxes/>
+						<DisplayCheckBoxes display={ display }/>
 
 
 						<SelectControl
@@ -136,7 +185,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							beforeIcon={'businessman'}
 						/>
 
-						<RangeControl
+						{/* <RangeControl
 							label="Avatar Corner size"
 							value={border_radius}
 							onChange={onChangeBorderRadius}
@@ -144,25 +193,25 @@ export default function Edit( { attributes, setAttributes } ) {
 							max={50}
 							initialPosition={0}
 							beforeIcon={'buddicons-buddypress-logo'}
-						/>
+						/> */}
 
-						<label className="blocks-base-control__label">{__('Background color', 'author-avatar')}</label>
+						{/* <label className="blocks-base-control__label">{__('Background color', 'author-avatar')}</label>
 						<ColorPicker  // Element Tag for Gutenberg standard colour selector
 							color={background_color}
 							enableAlpha
 							label={__('Background color', 'author-avatar')}
 							defaultValue="#000"
 							onChange={onChangeBgColor} // onChange event callback
-						/>
-						<label className="blocks-base-control__label">{__('Font color', 'author-avatar')}</label>
+						/> */}
+						{/* <label className="blocks-base-control__label">{__('Font color', 'author-avatar')}</label>
 						<ColorPicker  // Element Tag for Gutenberg standard colour selector
 							color={font_color}
 							label={__('Font color', 'author-avatar')}
 							title={__('Font color', 'author-avatar')}
 							defaultValue="#fff"
 							onChange={onChangeFontColor} // onChange event callback
-						/>
-						<RangeControl
+						/> */}
+						{/* <RangeControl
 							label="Border size"
 							value={border_size}
 							onChange={onChangeBorderSize}
@@ -170,15 +219,15 @@ export default function Edit( { attributes, setAttributes } ) {
 							max={50}
 							initialPosition={0}
 							beforeIcon={'buddicons-buddypress-logo'}
-						/>
-						<label className="blocks-base-control__label">{__('Border color', 'author-avatar')}</label>
+						/> */}
+						{/* <label className="blocks-base-control__label">{__('Border color', 'author-avatar')}</label>
 						<ColorPicker  // Element Tag for Gutenberg standard colour selector
 							color={border_color}
 							label={__('Font color', 'author-avatar')}
 							title={__('Font color', 'author-avatar')}
 							defaultValue="#fff"
 							onChange={onChangeBorderColor} // onChange event callback
-						/>
+						/> */}
 
 						<Fragment>
 							<a className={'donate'}
@@ -265,7 +314,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						)
 					}
 
-					<ServerSideRender block="author-avatars/show-avatar" attributes={attributes}/>
+					<ServerSideRender block={metadata.name} attributes={attributes}/>
 				</div>
 		</>
 	);

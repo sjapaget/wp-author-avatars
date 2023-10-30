@@ -195,13 +195,13 @@ registerBlockType('author-avatars/show-avatar', {
 			var font_color = props.attributes.font_color;
 			var border_size = props.attributes.border_size;
 			var border_color = props.attributes.border_color;
-			var user_id = props.attributes.user_id;
+			// var user_id = props.attributes.user_id;
 			var email = props.attributes.email;
-			var link = props.attributes.link;
-			var sort_avatars_by = props.attributes.sort_avatars_by;
-			var sort_order = props.attributes.sort_order;
-			var border_radius = props.attributes.border_radius;
-			var size = props.attributes.size;
+			// var link = props.attributes.link;
+			// var sort_avatars_by = props.attributes.sort_avatars_by;
+			// var sort_order = props.attributes.sort_order;
+			// var border_radius = props.attributes.border_radius;
+			// var size = props.attributes.size;
 			var bio_length = props.attributes.bio_length;
 			var page_size = props.attributes.page_size;
 			var min_post_count = props.attributes.min_post_count;
@@ -231,9 +231,9 @@ registerBlockType('author-avatars/show-avatar', {
 			//
 			// onChange event functions
 			//
-			function onChangeBgColor(content) {
-				props.setAttributes({background_color: content})
-			}
+			// function onChangeBgColor(content) {
+			// 	props.setAttributes({background_color: content})
+			// }
 
 			function onChangeFontColor(content) {
 				props.setAttributes({font_color: content})
@@ -247,9 +247,9 @@ registerBlockType('author-avatars/show-avatar', {
 				props.setAttributes({border_size: content})
 			}
 
-			function onChangelink(content) {
-				props.setAttributes({link: content})
-			}
+			// function onChangelink(content) {
+			// 	props.setAttributes({link: content})
+			// }
 
 			// function onChangeUser(content) {
 			// 	props.setAttributes({user_id: content})
@@ -259,17 +259,17 @@ registerBlockType('author-avatars/show-avatar', {
 				props.setAttributes({email: content})
 			}
 
-			function onChangeSize(content) {
-				props.setAttributes({size: content})
-			}
+			// function onChangeSize(content) {
+			// 	props.setAttributes({size: content})
+			// }
 
-			function onChangeLimit(content) {
-				props.setAttributes({limit: content})
-			}
+			// function onChangeLimit(content) {
+			// 	props.setAttributes({limit: content})
+			// }
 
-			function onChangeMinPosts(content) {
-				props.setAttributes({min_post_count: content})
-			}
+			// function onChangeMinPosts(content) {
+			// 	props.setAttributes({min_post_count: content})
+			// }
 
 			function onChangebio_length(content) {
 				props.setAttributes({bio_length: content})
@@ -279,13 +279,13 @@ registerBlockType('author-avatars/show-avatar', {
 				props.setAttributes({sort_order: content})
 			}
 
-			function onChangeSortBy(content) {
-				props.setAttributes({sort_avatars_by: content})
-			}
+			// function onChangeSortBy(content) {
+			// 	props.setAttributes({sort_avatars_by: content})
+			// }
 
-			function onChangePageSize(content) {
-				props.setAttributes({page_size: content})
-			}
+			// function onChangePageSize(content) {
+			// 	props.setAttributes({page_size: content})
+			// }
 
 			function onChangeHiddenUsers(content) {
 				props.setAttributes({hidden_users: content})
@@ -299,9 +299,9 @@ registerBlockType('author-avatars/show-avatar', {
 				props.setAttributes({alignment: updatedAlignment});
 			}
 
-			function onChangeBorderRadius(content) {
-				props.setAttributes({border_radius: content});
-			}
+			// function onChangeBorderRadius(content) {
+			// 	props.setAttributes({border_radius: content});
+			// }
 
 
 			const display = ('display' in attributes) ? attributes.display : new Object
