@@ -205,8 +205,8 @@ registerBlockType('author-avatars/show-avatar', {
 			var bio_length = props.attributes.bio_length;
 			var page_size = props.attributes.page_size;
 			var min_post_count = props.attributes.min_post_count;
-			var whitelist_users = props.attributes.whitelist_users;
-			var hidden_users = props.attributes.hidden_users;
+			// var whitelist_users = props.attributes.whitelist_users;
+			// var hidden_users = props.attributes.hidden_users;
 			var preview = props.attributes.preview;
 
 			var limit = props.attributes.limit;
@@ -287,13 +287,13 @@ registerBlockType('author-avatars/show-avatar', {
 			// 	props.setAttributes({page_size: content})
 			// }
 
-			function onChangeHiddenUsers(content) {
-				props.setAttributes({hidden_users: content})
-			}
+			// function onChangeHiddenUsers(content) {
+			// 	props.setAttributes({hidden_users: content})
+			// }
 
-			function onChangeWhitelistUsers(content) {
-				props.setAttributes({whitelist_users: content})
-			}
+			// function onChangeWhitelistUsers(content) {
+			// 	props.setAttributes({whitelist_users: content})
+			// }
 
 			function onChangeAlignment(updatedAlignment) {
 				props.setAttributes({alignment: updatedAlignment});

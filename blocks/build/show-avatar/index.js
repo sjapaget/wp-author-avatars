@@ -171,7 +171,9 @@ function Edit({
     display = new Object(),
     limit,
     page_size,
-    min_post_count
+    min_post_count,
+    hidden_users,
+    whitelist_users
     // border_radius,
     // background_color
   } = attributes;
@@ -213,6 +215,16 @@ function Edit({
   function onChangeMinPosts(content) {
     setAttributes({
       min_post_count: content
+    });
+  }
+  function onChangeHiddenUsers(content) {
+    props.setAttributes({
+      hidden_users: content
+    });
+  }
+  function onChangeWhitelistUsers(content) {
+    props.setAttributes({
+      whitelist_users: content
     });
   }
 
