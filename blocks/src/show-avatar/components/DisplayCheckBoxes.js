@@ -1,8 +1,7 @@
 export default function DisplayCheckBoxes( { attributes } ) {
-    // const display = ('display' in attributes) ? attributes.display : new Object
-
-    const { display } = attributes;
-
+    
+    const display = ('display' in attributes) ? attributes.display : new Object
+  
     return wp.compose.withState({
         checked_obj: Object.assign(new Object, display)
         })(({checked_obj, setState}) => (

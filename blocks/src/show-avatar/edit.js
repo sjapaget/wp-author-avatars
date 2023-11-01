@@ -14,10 +14,13 @@ import { __ } from '@wordpress/i18n';
 import { 
 	useBlockProps, 
 	InspectorControls,
-	InspectorAdvancedControls
+	InspectorAdvancedControls,
+	BlockControls
 } from '@wordpress/block-editor';
 
 import ServerSideRender from '@wordpress/server-side-render';
+
+import { useSelect } from '@wordpress/data';
 
 import {
 	RadioControl,
@@ -38,6 +41,7 @@ import metadata from './block.json';
 
 import RolesCheckBoxes from './components/RolesCheckBoxes';
 import DisplayCheckBoxes from './components/DisplayCheckBoxes';
+import BlogsCheckBoxes from './components/BlogsCheckBoxes';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -57,25 +61,42 @@ import './editor.scss';
  */
 export default function Edit( { attributes, setAttributes } ) {
 
+	let data = useSelect( ( select ) => {
+		return wp.apiFetch({path: '/author_avatar/blocks/v1/data'}).then(data => {
+					return {
+						user_options: data.users,
+						display_options: data.display_options,
+						user_roles: data.roles,
+						user_links: data.links,
+						sort_list: data.sort_avatars_by,
+						blogs_list: data.blogs,
+						DonateButton: data.donate,
+					}
+				}
+			)
+	} )
+
 	const blockProps = useBlockProps();
 
 	const { 
-		user_links, // not in block.json - (set w/ data from REST API)
-		user_options, // not in block.json - (set w/ data from REST API)
-		sort_list, // not in block.json - (set w/ data from REST API)
 		user_id,
 		link,
 		sort_avatars_by,
 		sort_order,
 		size,
-		display = new Object,
+		display,
 		limit,
 		page_size,
 		min_post_count,
 		hidden_users,
 		whitelist_users,
-		// border_radius,
-		// background_color
+		user_options = data.user_options,
+		display_options = data.display_options,
+		user_roles = data.user_roles,
+		user_links = data.user_links,
+		sort_list = data.sort_list,
+		blogs_list = data.blogs_list,
+		DonateButton = data.DonateButton
 	 } = attributes;
 
 	 function onChangeUser(content) {
@@ -118,21 +139,12 @@ export default function Edit( { attributes, setAttributes } ) {
 		props.setAttributes({whitelist_users: content})
 	}
 
-	// function onChangeBorderRadius(content) {
-	// 	setAttributes({border_radius: content});
-	// }
-
-	// function onChangeBgColor(content) {
-	// 	setAttributes({background_color: content})
-	// }
-
 	return (
 		<>
 			<InspectorControls key={'000'}>
 					<div className="author-avatar-components-panel">
-
 						<SelectControl
-							label={__('User or Email addrerss/user_id or Roles', 'author-avatar')}
+							label={__('User or Email address/user_id or Roles', 'author-avatar')}
 							name='user_id'
 							value={user_id}
 							options={user_options}
@@ -158,7 +170,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						)}
 						<label
 							className="blocks-base-control__label">{__('Info to show with avatar:', 'author-avatar')}</label>
-						<DisplayCheckBoxes display={ display }/>
+						<DisplayCheckBoxes attributes={ attributes }/>
 
 
 						<SelectControl
@@ -195,50 +207,6 @@ export default function Edit( { attributes, setAttributes } ) {
 							beforeIcon={'businessman'}
 						/>
 
-						{/* <RangeControl
-							label="Avatar Corner size"
-							value={border_radius}
-							onChange={onChangeBorderRadius}
-							min={0}
-							max={50}
-							initialPosition={0}
-							beforeIcon={'buddicons-buddypress-logo'}
-						/> */}
-
-						{/* <label className="blocks-base-control__label">{__('Background color', 'author-avatar')}</label>
-						<ColorPicker  // Element Tag for Gutenberg standard colour selector
-							color={background_color}
-							enableAlpha
-							label={__('Background color', 'author-avatar')}
-							defaultValue="#000"
-							onChange={onChangeBgColor} // onChange event callback
-						/> */}
-						{/* <label className="blocks-base-control__label">{__('Font color', 'author-avatar')}</label>
-						<ColorPicker  // Element Tag for Gutenberg standard colour selector
-							color={font_color}
-							label={__('Font color', 'author-avatar')}
-							title={__('Font color', 'author-avatar')}
-							defaultValue="#fff"
-							onChange={onChangeFontColor} // onChange event callback
-						/> */}
-						{/* <RangeControl
-							label="Border size"
-							value={border_size}
-							onChange={onChangeBorderSize}
-							min={0}
-							max={50}
-							initialPosition={0}
-							beforeIcon={'buddicons-buddypress-logo'}
-						/> */}
-						{/* <label className="blocks-base-control__label">{__('Border color', 'author-avatar')}</label>
-						<ColorPicker  // Element Tag for Gutenberg standard colour selector
-							color={border_color}
-							label={__('Font color', 'author-avatar')}
-							title={__('Font color', 'author-avatar')}
-							defaultValue="#fff"
-							onChange={onChangeBorderColor} // onChange event callback
-						/> */}
-
 						<Fragment>
 							<a className={'donate'}
 							   href={'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MZTZ5S8MGF75C&lc=CA&item_name=Author%20Avatars%20Plugin%20Support&item_number=authoravatars&currency_code=CAD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted'}
@@ -255,7 +223,9 @@ export default function Edit( { attributes, setAttributes } ) {
 				</InspectorControls>,
 
 				<InspectorAdvancedControls key={'111'}>
-					{true === display.show_biography && (
+						{/* 
+						@todo make a new attribute for this
+						{true === display.show_biography && (
 						<RangeControl
 							label="bio_length"
 							value={bio_length}
@@ -264,7 +234,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							max={200}
 							initialPosition={50}
 						/>
-					)}
+					)} */}
 					{0 == user_id && (
 						<Fragment>
 							<TextControl
@@ -305,25 +275,16 @@ export default function Edit( { attributes, setAttributes } ) {
 								onChange={onChangeWhitelistUsers}
 							/>
 
-							<BlogsCheckBoxes/>
+							{/* 
+								@todo - This component throws an error - find out why
+							<BlogsCheckBoxes attributes={attributes} /> */}
 						</Fragment>
 					)}
 
-				</InspectorAdvancedControls>,
+				</InspectorAdvancedControls>
 
 
-				<div {...useBlockProps()} key={'222'}>
-					{
-						!!focus && (
-							<BlockControls>
-								<AlignmentToolbar
-									value={alignment}
-									onChange={onChangeAlignment}
-								/>
-							</BlockControls>
-						)
-					}
-
+				<div {...blockProps} key={'222'}>
 					<ServerSideRender block={metadata.name} attributes={attributes}/>
 				</div>
 		</>

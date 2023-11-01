@@ -2,6 +2,48 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/show-avatar/components/BlogsCheckBoxes.js":
+/*!*******************************************************!*\
+  !*** ./src/show-avatar/components/BlogsCheckBoxes.js ***!
+  \*******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ BlogsCheckBoxes; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function BlogsCheckBoxes({
+  attributes
+}) {
+  const blogs = 'blogs' in attributes ? attributes.blogs : new Object();
+  return wp.compose.withState({
+    checked_obj: Object.assign(new Object(), role)
+  })(({
+    checked_obj,
+    setState
+  }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, blogs_list?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+    key: v.value
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
+    className: "check_items",
+    label: v.label,
+    checked: checked_obj[v.value],
+    onChange: check => {
+      check ? checked_obj[v.value] = true : delete checked_obj[v.value];
+      setAttributes({
+        blogs: checked_obj
+      });
+      setState({
+        checked_obj
+      });
+    }
+  })))));
+}
+
+/***/ }),
+
 /***/ "./src/show-avatar/components/DisplayCheckBoxes.js":
 /*!*********************************************************!*\
   !*** ./src/show-avatar/components/DisplayCheckBoxes.js ***!
@@ -18,11 +60,7 @@ __webpack_require__.r(__webpack_exports__);
 function DisplayCheckBoxes({
   attributes
 }) {
-  // const display = ('display' in attributes) ? attributes.display : new Object
-
-  const {
-    display
-  } = attributes;
+  const display = 'display' in attributes ? attributes.display : new Object();
   return wp.compose.withState({
     checked_obj: Object.assign(new Object(), display)
   })(({
@@ -108,12 +146,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/server-side-render */ "@wordpress/server-side-render");
 /* harmony import */ var _wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./block.json */ "./src/show-avatar/block.json");
-/* harmony import */ var _components_RolesCheckBoxes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/RolesCheckBoxes */ "./src/show-avatar/components/RolesCheckBoxes.js");
-/* harmony import */ var _components_DisplayCheckBoxes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/DisplayCheckBoxes */ "./src/show-avatar/components/DisplayCheckBoxes.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./editor.scss */ "./src/show-avatar/editor.scss");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./block.json */ "./src/show-avatar/block.json");
+/* harmony import */ var _components_RolesCheckBoxes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/RolesCheckBoxes */ "./src/show-avatar/components/RolesCheckBoxes.js");
+/* harmony import */ var _components_DisplayCheckBoxes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/DisplayCheckBoxes */ "./src/show-avatar/components/DisplayCheckBoxes.js");
+/* harmony import */ var _components_BlogsCheckBoxes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/BlogsCheckBoxes */ "./src/show-avatar/components/BlogsCheckBoxes.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editor.scss */ "./src/show-avatar/editor.scss");
 
 /**
  * Retrieves the translation of text.
@@ -128,6 +169,8 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
+
+
 
 
 
@@ -155,27 +198,41 @@ function Edit({
   attributes,
   setAttributes
 }) {
+  let data = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
+    return wp.apiFetch({
+      path: '/author_avatar/blocks/v1/data'
+    }).then(data => {
+      return {
+        user_options: data.users,
+        display_options: data.display_options,
+        user_roles: data.roles,
+        user_links: data.links,
+        sort_list: data.sort_avatars_by,
+        blogs_list: data.blogs,
+        DonateButton: data.donate
+      };
+    });
+  });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
   const {
-    user_links,
-    // not in block.json - (set w/ data from REST API)
-    user_options,
-    // not in block.json - (set w/ data from REST API)
-    sort_list,
-    // not in block.json - (set w/ data from REST API)
     user_id,
     link,
     sort_avatars_by,
     sort_order,
     size,
-    display = new Object(),
+    display,
     limit,
     page_size,
     min_post_count,
     hidden_users,
-    whitelist_users
-    // border_radius,
-    // background_color
+    whitelist_users,
+    user_options = data.user_options,
+    display_options = data.display_options,
+    user_roles = data.user_roles,
+    user_links = data.user_links,
+    sort_list = data.sort_list,
+    blogs_list = data.blogs_list,
+    DonateButton = data.DonateButton
   } = attributes;
   function onChangeUser(content) {
     setAttributes({
@@ -227,49 +284,40 @@ function Edit({
       whitelist_users: content
     });
   }
-
-  // function onChangeBorderRadius(content) {
-  // 	setAttributes({border_radius: content});
-  // }
-
-  // function onChangeBgColor(content) {
-  // 	setAttributes({background_color: content})
-  // }
-
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     key: '000'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "author-avatar-components-panel"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('User or Email addrerss/user_id or Roles', 'author-avatar'),
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('User or Email address/user_id or Roles', 'author-avatar'),
     name: "user_id",
     value: user_id,
     options: user_options,
     onChange: onChangeUser
-  }), -1 == user_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+  }), -1 == user_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
     label: "Custom email / id",
     type: 'text',
     value: email,
     onChange: onChangeEmail
   }), 0 == user_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Which Roles to display:', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_RolesCheckBoxes__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Which Roles to display:', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_RolesCheckBoxes__WEBPACK_IMPORTED_MODULE_7__["default"], {
     attributes: attributes
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "blocks-base-control__label"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Info to show with avatar:', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_DisplayCheckBoxes__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    display: display
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Info to show with avatar:', 'author-avatar')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_DisplayCheckBoxes__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    attributes: attributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Link avatars to', 'author-avatar'),
     value: link,
     options: user_links,
     onChange: onChangelink
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sort by', 'author-avatar'),
     value: sort_avatars_by,
     options: sort_list,
     onChange: onChangeSortBy
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sort order', 'author-avatar'),
     value: sort_order,
     options: [{
@@ -280,7 +328,7 @@ function Edit({
       value: 'desc'
     }],
     onChange: onChangeSortOrder
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.RangeControl, {
     label: "Avatar Size",
     value: size,
     onChange: onChangeSize,
@@ -299,49 +347,39 @@ function Edit({
     className: "blocks-base-control__label"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('More options in Adavanced:', 'author-avatar'))))), ",", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorAdvancedControls, {
     key: '111'
-  }, true === display.show_biography && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.RangeControl, {
-    label: "bio_length",
-    value: bio_length,
-    onChange: onChangebio_length,
-    min: 10,
-    max: 200,
-    initialPosition: 50
-  }), 0 == user_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+  }, 0 == user_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Max. avatars shown:', 'author-avatar'),
     type: 'number',
     value: limit,
     name: 'limit',
     onChange: onChangeLimit
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Max. avatars per page:', 'author-avatar'),
     type: 'number',
     value: page_size,
     name: 'limit',
     onChange: onChangePageSize
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Required number of posts:', 'author-avatar'),
     type: 'number',
     value: min_post_count,
     name: 'limit',
     onChange: onChangeMinPosts
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextareaControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hidden users', 'author-avatar'),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('(Comma separate list of user login ids. Hidden user are removed before the white list)', 'author-avatar'),
     value: hidden_users,
     onChange: onChangeHiddenUsers
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextareaControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextareaControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('White List of users:', 'author-avatar'),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('(0nly show these users, Comma separate list of user login ids)', 'author-avatar'),
     value: whitelist_users,
     onChange: onChangeWhitelistUsers
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlogsCheckBoxes, null))), ",", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(),
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...blockProps,
     key: '222'
-  }, !!focus && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(BlockControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(AlignmentToolbar, {
-    value: alignment,
-    onChange: onChangeAlignment
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
-    block: _block_json__WEBPACK_IMPORTED_MODULE_5__.name,
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((_wordpress_server_side_render__WEBPACK_IMPORTED_MODULE_3___default()), {
+    block: _block_json__WEBPACK_IMPORTED_MODULE_6__.name,
     attributes: attributes
   })));
 }
@@ -457,6 +495,16 @@ module.exports = window["wp"]["blocks"];
 /***/ (function(module) {
 
 module.exports = window["wp"]["components"];
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["data"];
 
 /***/ }),
 
