@@ -19,12 +19,10 @@ function BlogsCheckBoxes({
   attributes
 }) {
   const blogs = 'blogs' in attributes ? attributes.blogs : new Object();
-  return wp.compose.withState({
-    checked_obj: Object.assign(new Object(), role)
-  })(({
-    checked_obj,
-    setState
-  }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, blogs_list?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  const {
+    blogs_list
+  } = attributes;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, blogs_list?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: v.value
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
     className: "check_items",
@@ -39,7 +37,7 @@ function BlogsCheckBoxes({
         checked_obj
       });
     }
-  })))));
+  }))));
 }
 
 /***/ }),
@@ -61,12 +59,10 @@ function DisplayCheckBoxes({
   attributes
 }) {
   const display = 'display' in attributes ? attributes.display : new Object();
-  return wp.compose.withState({
-    checked_obj: Object.assign(new Object(), display)
-  })(({
-    checked_obj,
-    setState
-  }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, display_options?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  const {
+    display_options
+  } = attributes;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, display_options?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: v.value
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
     className: "check_items",
@@ -77,11 +73,8 @@ function DisplayCheckBoxes({
       setAttributes({
         display: checked_obj
       });
-      setState({
-        checked_obj
-      });
     }
-  })))));
+  }))));
 }
 
 /***/ }),
@@ -103,12 +96,10 @@ function RolesCheckBoxes({
   attributes
 }) {
   const role = 'role' in attributes ? attributes.role : new Object();
-  return wp.compose.withState({
-    checked_obj: Object.assign(new Object(), role)
-  })(({
-    checked_obj,
-    setState
-  }) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, user_roles?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
+  const {
+    user_roles
+  } = attributes;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, user_roles?.map(v => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
     key: v.value
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(CheckboxControl, {
     className: "check_items",
@@ -119,11 +110,8 @@ function RolesCheckBoxes({
       setAttributes({
         role: checked_obj
       });
-      setState({
-        checked_obj
-      });
     }
-  })))));
+  }))));
 }
 
 /***/ }),
@@ -284,6 +272,7 @@ function Edit({
       whitelist_users: content
     });
   }
+  console.log(user_id);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     key: '000'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -375,6 +364,8 @@ function Edit({
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('(0nly show these users, Comma separate list of user login ids)', 'author-avatar'),
     value: whitelist_users,
     onChange: onChangeWhitelistUsers
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BlogsCheckBoxes__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    attributes: attributes
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps,
     key: '222'

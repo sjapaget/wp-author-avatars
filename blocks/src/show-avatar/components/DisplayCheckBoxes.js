@@ -1,10 +1,10 @@
 export default function DisplayCheckBoxes( { attributes } ) {
     
     const display = ('display' in attributes) ? attributes.display : new Object
+
+    const { display_options } = attributes;
   
-    return wp.compose.withState({
-        checked_obj: Object.assign(new Object, display)
-        })(({checked_obj, setState}) => (
+    return (
             <ul>
                 {
                     display_options?.map((v) => (
@@ -15,11 +15,10 @@ export default function DisplayCheckBoxes( { attributes } ) {
                             onChange={(check) => {
                                 check ? checked_obj[v.value] = true : delete checked_obj[v.value]
                                 setAttributes({display: checked_obj})
-                                setState({checked_obj})
                             }}
                         /></li>
                     ))
                 }
             </ul>
-        ));
+        );
 }

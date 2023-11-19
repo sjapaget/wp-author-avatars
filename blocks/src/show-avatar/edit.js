@@ -138,7 +138,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	function onChangeWhitelistUsers(content) {
 		props.setAttributes({whitelist_users: content})
 	}
-
+	console.log(user_id)
 	return (
 		<>
 			<InspectorControls key={'000'}>
@@ -277,7 +277,8 @@ export default function Edit( { attributes, setAttributes } ) {
 
 							{/* 
 								@todo - This component throws an error - find out why
-							<BlogsCheckBoxes attributes={attributes} /> */}
+							*/}
+							<BlogsCheckBoxes attributes={attributes} /> 
 						</Fragment>
 					)}
 

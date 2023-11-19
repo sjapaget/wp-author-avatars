@@ -4,11 +4,10 @@
 export default function BlogsCheckBoxes( { attributes } ) {
     
     const blogs = ('blogs' in attributes) ? attributes.blogs : new Object
-  
 
-    return wp.compose.withState({
-        checked_obj: Object.assign(new Object, role)
-    })(({checked_obj, setState}) => (
+    const { blogs_list } = attributes;
+  
+    return (
         <ul>
             {
                 blogs_list?.map((v) => (
@@ -25,5 +24,7 @@ export default function BlogsCheckBoxes( { attributes } ) {
                 ))
             }
         </ul>
-    ));
+    );
+
+ 
 }

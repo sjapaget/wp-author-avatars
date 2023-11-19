@@ -2,9 +2,9 @@ export default function RolesCheckBoxes( { attributes } ) {
 
     const role = ('role' in attributes) ? attributes.role : new Object;
 
-    return wp.compose.withState({
-        checked_obj: Object.assign(new Object, role)
-    })(({checked_obj, setState}) => (
+    const { user_roles } = attributes;
+
+    return (
         <ul>
             {
                 user_roles?.map((v) => (
@@ -15,11 +15,10 @@ export default function RolesCheckBoxes( { attributes } ) {
                         onChange={(check) => {
                             check ? checked_obj[v.value] = true : delete checked_obj[v.value]
                             setAttributes({role: checked_obj})
-                            setState({checked_obj})
                         }}
                     /></li>
                 ))
             }
         </ul>
-    ));
+    );
 }
