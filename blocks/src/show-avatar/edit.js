@@ -138,7 +138,9 @@ export default function Edit( { attributes, setAttributes } ) {
 	function onChangeWhitelistUsers(content) {
 		props.setAttributes({whitelist_users: content})
 	}
-	console.log(user_id)
+	// @todo - figure out how to make render return wait for data to be available
+console.log(data)
+console.log(user_options)
 	return (
 		<>
 			<InspectorControls key={'000'}>
@@ -147,7 +149,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							label={__('User or Email address/user_id or Roles', 'author-avatar')}
 							name='user_id'
 							value={user_id}
-							options={user_options}
+							options={[1, 2 , 3]}
+							// options={user_options}
 							onChange={onChangeUser}
 						/>
 						{-1 == user_id && (

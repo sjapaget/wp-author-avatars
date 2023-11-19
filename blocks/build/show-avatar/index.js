@@ -272,7 +272,9 @@ function Edit({
       whitelist_users: content
     });
   }
-  console.log(user_id);
+  // @todo - figure out how to make render return wait for data to be available
+  console.log(data);
+  console.log(user_options);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
     key: '000'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -281,7 +283,9 @@ function Edit({
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('User or Email address/user_id or Roles', 'author-avatar'),
     name: "user_id",
     value: user_id,
-    options: user_options,
+    options: [1, 2, 3]
+    // options={user_options}
+    ,
     onChange: onChangeUser
   }), -1 == user_id && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.TextControl, {
     label: "Custom email / id",
